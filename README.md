@@ -110,5 +110,3 @@ Proiectul are ca scop dezvoltarea unei soluții software simplificate pentru ges
 - **Java 17** sau o versiune mai recentă.
 - **SQL Server 2014**.
 - **Maven** pentru gestionarea dependențelor.
-
----
