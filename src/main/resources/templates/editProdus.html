@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editează Produs</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/depozit1.jpg');
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        form input, form button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        form button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Editează Produs</h1>
+    <form th:action="@{/updateProdus}" method="post" th:object="${produs}">
+        <input type="hidden" th:field="*{id}" />
+        <label for="nume">Nume:</label>
+        <input type="text" id="nume" th:field="*{nume}" required />
+        <p th:if="${#fields.hasErrors('nume')}" th:errors="*{nume}"></p>
+
+        <label for="pret">Preț:</label>
+        <input type="number" id="pret" th:field="*{pret}" step="0.01" required />
+        <p th:if="${#fields.hasErrors('pret')}" th:errors="*{pret}"></p>
+
+        <label for="descriere">Descriere:</label>
+        <textarea id="descriere" th:field="*{descriere}"></textarea>
+
+        <button type="submit" onclick="return confirm('Sigur doriți să editați acest produs?');">Salvează</button>
+    </form>
+
+</div>
+</body>
+</html>

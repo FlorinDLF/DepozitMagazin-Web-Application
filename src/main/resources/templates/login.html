@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Depozit</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/depozit1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9); /* Fundal alb semi-transparent */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f1c40f; /* Galben */
+        }
+
+        .login-container h1 {
+            color: #007bff; /* Albastru */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            font-size: 1rem;
+            color: #333333;
+            margin-bottom: 5px;
+        }
+
+        form input {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        form button {
+            padding: 10px;
+            background-color: #007bff; /* Albastru */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #0056b3; /* Albastru mai închis */
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666666;
+        }
+
+        .login-footer a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .login-footer a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1>Autentificare</h1>
+    <form action="/login" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+        <label for="username">Nume utilizator:</label>
+        <input type="text" id="username" name="username" placeholder="Introduceți numele de utilizator" required>
+
+        <label for="password">Parolă:</label>
+        <input type="password" id="password" name="password" placeholder="Introduceți parola" required>
+
+        <button type="submit">Autentificare</button>
+    </form>
+
+    <div class="login-footer">
+        <p>&copy; 2025 Depozit Metro - Toate drepturile rezervate.</p>
+    </div>
+</div>
+</body>
+</html>

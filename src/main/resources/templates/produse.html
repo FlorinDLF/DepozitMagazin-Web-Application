@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Produse - Depozit</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('/depozit1.jpg');
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        header nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #ffcc00;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #0056b3;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table thead {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        table tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:hover {
+            background-color: #ffcc00;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-buttons .edit-btn {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        .action-buttons .edit-btn:hover {
+            background-color: #004094;
+        }
+
+        .action-buttons .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .action-buttons .delete-btn:hover {
+            background-color: #b02a37;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        form label {
+            font-weight: bold;
+            color: #0056b3;
+        }
+
+        form input, form textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        form button {
+            grid-column: span 2;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Depozit Metro</h1>
+</header>
+
+<div class="container">
+    <h2>Lista de produse</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nume</th>
+            <th>Preț</th>
+            <th>Descriere</th>
+            <th>Acțiuni</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="produs : ${produse}">
+            <td th:text="${produs.id}"></td>
+            <td th:text="${produs.nume}"></td>
+            <td th:text="${produs.pret}"></td>
+            <td th:text="${produs.descriere}"></td>
+            <td>
+                <div class="action-buttons">
+                    <button class="edit-btn"
+                            th:attr="onclick='location.href=\'/edit?id=' + ${produs.id} + '\''">Editează</button>
+                    <button class="delete-btn"
+                            th:onclick="|if(confirm('Sigur doriți să ștergeți acest produs?')) location.href='/delete?id=' + ${produs.id};|">
+                        Șterge
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Adaugă produs</h2>
+    <form action="/addProdus" method="post" th:object="${produs}">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+        <div>
+            <label for="nume">Nume:</label>
+            <input type="text" id="nume" th:field="*{nume}" />
+            <p th:if="${#fields.hasErrors('nume')}" th:errors="*{nume}"></p>
+        </div>
+        <div>
+            <label for="pret">Preț:</label>
+            <input type="number" id="pret" th:field="*{pret}" step="0.01" />
+            <p th:if="${#fields.hasErrors('pret')}" th:errors="*{pret}"></p>
+        </div>
+        <div>
+            <label for="descriere">Descriere:</label>
+            <textarea id="descriere" th:field="*{descriere}"></textarea>
+        </div>
+        <button type="submit" onclick="return confirm('Sigur doriți să adăugați acest produs?');">Salvează</button>
+    </form>
+</div>
+<footer>
+    &copy; 2025 Depozit Metro - Toate drepturile rezervate.
+</footer>
+</body>
+</html>
